@@ -1,0 +1,110 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  Field          | OpenFOAM: v2412                                  |
+|  \\    /   Operation      |                                                 |
+|   \\  /    And            |                                                 |
+|    \\/     Manipulation   |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      snappyHexMeshDict;
+}
+
+castellatedMesh true;
+snap            true;
+addLayers       false;
+
+// --------------------
+// Geometry
+// --------------------
+geometry
+{
+    rocket.stl
+    {
+        type triSurfaceMesh;
+        name rocket;
+    }
+}
+
+// --------------------
+// Castellated controls
+// --------------------
+castellatedMeshControls
+{
+    maxLocalCells 1000000;
+    maxGlobalCells 3000000;
+    minRefinementCells 10;
+    nCellsBetweenLevels 2;
+
+    features ();
+
+    refinementSurfaces
+    {
+        rocket
+        {
+            level (2 3);
+        }
+    }
+
+    refinementRegions {}
+    
+    resolveFeatureAngle 30;
+    allowFreeStandingZoneFaces true;
+
+    locationInMesh (0 0 0);  // must be inside domain, outside rocket
+}
+
+// --------------------
+// Snap controls
+// --------------------
+snapControls
+{
+    nSmoothPatch 3;
+    tolerance 2.0;
+    nSolveIter 30;
+    nRelaxIter 5;
+}
+
+// --------------------
+// Layer controls (off for now)
+// --------------------
+addLayersControls {}
+
+// --------------------
+// Mesh quality
+// --------------------
+meshQualityControls
+{
+    // Geometry quality
+    maxNonOrtho          65;
+    maxBoundarySkewness  20;
+    maxInternalSkewness  4;
+    maxConcave           80;
+
+    // Absolute limits
+    minVol               1e-13;
+    minArea              1e-13;
+    minCellVolume        1e-13;
+
+    // Ratio / weighting
+    minFaceWeight        0.02;
+    minVolRatio          0.01;
+
+    // Element quality
+    minTetQuality        1e-9;
+    minTwist             0.02;
+    minTriangleTwist     0.02;
+    minDeterminant       1e-6;
+    minFaceFlatness      0.5;
+
+    errorReduction 0.75;
+    nSmoothScale 4;
+
+}
+
+
+debug 0;
+mergeTolerance 1e-6;

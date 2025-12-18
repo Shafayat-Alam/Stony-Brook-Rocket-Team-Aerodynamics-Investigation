@@ -1,0 +1,29 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  Field          | OpenFOAM: v2412                                  |
+|  \\    /   Operation      |                                                 |
+|   \\  /    And            |                                                 |
+|    \\/     Manipulation   |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      surfaceFeatureExtractDict;
+}
+
+surfaces
+(
+    rocket.stl
+    {
+        extractionMethod    extractFromSurface;
+
+        extractFromSurfaceCoeffs
+        {
+            includedAngle   150;   // sharp edges
+        }
+
+        writeObj            yes;
+    }
+);

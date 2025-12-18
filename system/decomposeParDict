@@ -1,0 +1,40 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  Field          | OpenFOAM: v2412                                  |
+|  \\    /   Operation      |                                                 |
+|   \\  /    And            |                                                 |
+|    \\/     Manipulation   |                                                 |
+\*---------------------------------------------------------------------------*/
+
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      decomposeParDict;
+}
+
+// Number of MPI ranks
+numberOfSubdomains 16;
+
+// Decomposition method
+method scotch;
+
+// Optional (scotch ignores this, but OpenFOAM likes it present)
+simpleCoeffs
+{
+    n (4 2 2);     // ignored by scotch
+    delta 0.001;
+}
+
+hierarchicalCoeffs
+{
+    n (4 2 2);     // ignored by scotch
+    delta 0.001;
+    order xyz;
+}
+
+// No manual constraints
+constraints
+{
+}
