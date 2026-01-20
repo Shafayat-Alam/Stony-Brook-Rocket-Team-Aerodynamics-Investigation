@@ -1,3 +1,3 @@
-# altitude_rocket
+# Stony Brook Rocket Team 
 
 Documentation: "Pr3" 
